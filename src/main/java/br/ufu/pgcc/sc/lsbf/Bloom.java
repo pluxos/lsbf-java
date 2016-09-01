@@ -131,35 +131,47 @@ public class Bloom
 
     private long[] getVector(BloomStruct bloom, float[] f, float R)
     {
-        globCounter++;
 //        if(globCounter == 128)
 //            System.out.println("aqui");
 
+//        System.out.println();
         long[] temp = new long[bloom.nFuncs];
         float result;
         for (int i = 0; i < bloom.nFuncs; i++)
         {
-            if(globCounter == 128 && i == 2)
-                System.out.println("aqui");
+            globCounter++;
+//            if(globCounter == 128 && i == 2)
+//                System.out.println("aqui");
             result = bloom.para_b[i];
             for (int k = 0; k < dimention; k++)
             {
                 result += f[k] * (bloom.para_a[i][k] / R);
+//                if(globCounter == 128 && i == 2)
+                if(globCounter == 384 || globCounter == 447 || globCounter == 926 || globCounter == 1399 || globCounter == 2285)
+                    System.out.print(String.format("\nk: %d, f[k]: %f, bloom.para_a[i][k]: %f, R: %f, result: %f", k, f[k], bloom.para_a[i][k], R, result));
             }
 //            System.out.print(result +"\n");
+            if(globCounter == 384 || globCounter == 447 || globCounter == 926 || globCounter == 1399 || globCounter == 2285)
+                System.out.print(String.format("\nresult =  %f", result));
             result /= W;
+            if(globCounter == 384 || globCounter == 447 || globCounter == 926 || globCounter == 1399 || globCounter == 2285)
+                System.out.print(String.format("\nresult/W =  %f", result));
             temp[i] = (long) Math.floor(result); // h(v) = (a.v+b)/w
+            if(globCounter == 384 || globCounter == 447 || globCounter == 926 || globCounter == 1399 || globCounter == 2285)
+                System.out.print("\nfloor(result): " + temp[i]);
             temp[i] = unsignedRepresentation(temp[i]);
-            System.out.print(globCounter + ": " + temp[i] + " \n");
+            if(globCounter == 384 || globCounter == 447 || globCounter == 926 || globCounter == 1399 || globCounter == 2285)
+                System.out.print("\nRESULTADO unsigned: " + temp[i] + "\n");
+//            System.out.print("\n" + globCounter + ": " + temp[i] + " ");
         }
-//        System.out.println();
+
         return temp;
     }
 
     private long unsignedRepresentation(long l)
     {
-        long uMin = 0L;
         long uMax = 1l<<32;
+
         l %= uMax;
         l += uMax;
         l %= uMax;
