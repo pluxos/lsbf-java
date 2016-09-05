@@ -17,17 +17,24 @@ public class Lsbf
 
         bloom.set(dataset, nDatasetPoints, R);
 
-//        String str;
+        String str;
+        int yes = 0;
+        int no = 0;
         for (int i = 0; i < nQueryPoints; i++)
         {
-//            result[i] = bloom.checkSimilar(queryset[i], R);
-//            System.out.println(result[i]);
-//            if(bloom.checkSimilar(queryset[i], R))
-//                str = "Yes";
-//            else
-//                str = "No";
-//            System.out.println(String.format("Query Point %d:%s", i, str));
+            if(bloom.checkSimilar(queryset[i], R))
+            {
+                yes++;
+                str = "Yes";
+            }
+            else
+            {
+                str = "No";
+                no++;
+            }
+            System.out.println(String.format("Query Point %d:%s", i, str));
         }
+        System.out.println(String.format("\nyes = %d\nno = %d", yes, no));
 
         return result;
     }
