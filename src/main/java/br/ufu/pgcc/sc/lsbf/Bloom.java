@@ -16,6 +16,7 @@ public class Bloom
     private static final long MAX_HASH_RND = 536870912L & 0xffffffff;     // lsh_r(1,MAX_HASH_RND)
 
     private long lsh_r[];    //used to calculate the gindex of lsh, gindex=((lsh_r*a)mod prime)mod tableSize
+//    private static long lsh_r[] = { (451072346 & 0xffffffff), (211732722 & 0xffffffff), (420423195 & 0xffffffff) };
 
     private BloomStruct bloom[];
 
@@ -46,8 +47,10 @@ public class Bloom
                 for (int k = 0; k < dimention; k++)
                 {
                     bloom[i].para_a[l][k] = Hash.genGaussianRandom();
+//                    bloom[i].para_a[l][k] = Hash.GAUSSIAN[i][l][k];
                 }
                 bloom[i].para_b[l] = Hash.genUniformRandom(0, W);
+//                bloom[i].para_b[l] = Hash.UNIFORM[i][l];
             }
         }
     }
@@ -126,9 +129,9 @@ public class Bloom
 
     public boolean checkSimilar(float[] s, float R)
     {
-        // check whether a point is similar to a Set
-        // for one bloom, if the point's	index +1 or -1 bit is 1,then we can say this bloom is true
-        // if all bloom are true,then reutrn 1
+        // check whether a point is similar to a Set for one bloom,
+        // if the point's index +1 or -1 bit is 1, then we can say this bloom is true
+        // if all bloom are true, then return true
         long temp[], index;
         int j;
 
@@ -137,7 +140,7 @@ public class Bloom
             temp = getVector(bloom[i], s, R);
             index = getIndex(bloom[i], temp);
 
-            if (!getBit(bloom[i].a, index))
+            if (getBit(bloom[i].a, index))
             {
                 continue;
             }

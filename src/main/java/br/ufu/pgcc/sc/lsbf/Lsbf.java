@@ -22,7 +22,7 @@ public class Lsbf
         int no = 0;
         for (int i = 0; i < nQueryPoints; i++)
         {
-            if(bloom.checkSimilar(queryset[i], R))
+            if (bloom.checkSimilar(queryset[i], R))
             {
                 yes++;
                 str = "Yes";
